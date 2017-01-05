@@ -34,6 +34,10 @@ FLAGS = None
 # Import data
 mnist = input_data.read_data_sets('/tmp/tf', one_hot=True)
 
+config = tf.ConfigProto(
+          device_count = {'GPU': 0}
+              )
+
 # Create the model
 x = tf.placeholder(tf.float32, [None, 784])
 W = tf.Variable(tf.zeros([784, 10]))
@@ -95,7 +99,7 @@ correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
 
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-sess = tf.InteractiveSession()
+sess = tf.InteractiveSession(config=config)
 sess.run(tf.initialize_all_variables())
 
 for i in range(20000):
